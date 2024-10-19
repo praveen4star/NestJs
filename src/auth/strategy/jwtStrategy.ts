@@ -5,8 +5,8 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { jwtConstants } from 'src/constants';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { jwtConstants } from '../../constants';
+import { PrismaService } from '../../prisma/prisma.service';
 
 @Injectable()
 export class JwtStrategy implements CanActivate {
@@ -29,8 +29,8 @@ export class JwtStrategy implements CanActivate {
       });
       delete user.password;
       request['user'] = user;
-    } catch {
-      throw new UnauthorizedException();
+    } catch (err) {
+      throw new UnauthorizedException(err);
     }
     return true;
   }

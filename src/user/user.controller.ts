@@ -1,12 +1,11 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import { Controller, Get, Patch, UseGuards } from '@nestjs/common';
 import { User } from '@prisma/client';
 
-import { GetUser } from 'src/auth/decorator';
-import { JwtStrategy } from 'src/auth/strategy';
-
+import { GetUser } from '../auth/decorator';
+import { JwtStrategy } from '../auth/strategy';
+@UseGuards(JwtStrategy)
 @Controller('user')
 export class UserController {
-  @UseGuards(JwtStrategy)
   @Get('me')
   getMe(@GetUser() user: User) {
     console.log(user);
@@ -15,5 +14,9 @@ export class UserController {
       username: 'user',
       email: '',
     };
+  }
+  @Patch()
+  editUser() {
+    return 'edit user';
   }
 }
